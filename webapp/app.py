@@ -25,11 +25,10 @@ def status_led():
 
     if last_button_click:
         now = datetime.datetime.now()
+        threshold = datetime.datetime(now.year, now.month, now.day, 7, 0)
 
         if now.hour < 7:
-            threshold = datetime.datetime(now.year, now.month, now.day - 1, 7, 0)
-        else:
-            threshold = datetime.datetime(now.year, now.month, now.day, 7, 0)
+            threshold -= datetime.timedelta(days=1)
 
         if last_button_click < threshold:
             return flask.jsonify({"led": 0x080000, "refresh": 30})
