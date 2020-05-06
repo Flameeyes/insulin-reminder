@@ -7,6 +7,7 @@ import secrets
 import time
 
 import adafruit_requests as requests
+import adafruit_rgbled
 import board
 import busio
 import neopixel
@@ -17,9 +18,12 @@ from adafruit_esp32spi import (
 )
 from digitalio import DigitalInOut
 
-insulin_light = neopixel.NeoPixel(board.NEOPIXEL, 1, brightness=0.2)
+pixel = neopixel.NeoPixel(board.NEOPIXEL, 1, brightness=0.2)
+pixel[0] = (0, 0, 0)
+
+insulin_light = adafruit_rgbled.RGBLED(board.D5, board.D6, board.D9)
 # Start the light blue, to make it clear it's just configuring.
-insulin_light[0] = (0, 0, 0x10)
+insulin_light.color = (0, 0, 0x10)
 
 print("ESP32 SPI Setup")
 
@@ -62,7 +66,7 @@ while True:
             % (led_color, refresh_time)
         )
 
-        insulin_light[0] = led_color
+        insulin_light.color = led_color
         response.close()
         time.sleep(refresh_time)
     except Exception as e:
