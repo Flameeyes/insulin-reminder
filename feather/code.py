@@ -11,6 +11,7 @@ import adafruit_rgbled
 import board
 import busio
 import neopixel
+import supervisor
 from adafruit_esp32spi import (
     adafruit_esp32spi,
     adafruit_esp32spi_socket,
@@ -51,18 +52,24 @@ while True:
 
     requests.set_socket(adafruit_esp32spi_socket, esp)
 
+    exception_count = 0
     while True:
+        led_color = 0xFFFFFF
+        refresh_time = 60
+
         try:
             response = requests.get(secrets.URL)
+
             response_parsed = response.json()
 
             if "led" in response_parsed:
                 led_color = int(response_parsed["led"])
+            else:
+                exception_count += 1
+                print("Missing led colour in response, likely non-OK response.")
 
             if "refresh" in response_parsed:
                 refresh_time = int(response_parsed["refresh"])
-            else:
-                refresh_time = 60
 
             print(
                 "Last LED status: #%06x. Refresh time: %d seconds"
@@ -83,4 +90,7 @@ while True:
                 print("WiFi disconnected, retrying.")
                 break
             print(str(e))
+            exception_count += 1
+            if exception_count > 3:
+                supervisor.reload()
             pass
