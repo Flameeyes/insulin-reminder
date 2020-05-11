@@ -54,6 +54,9 @@ while True:
 
     exception_count = 0
     while True:
+        if exception_count > 3:
+            supervisor.reload()
+
         led_color = 0xFFFFFF
         refresh_time = 60
 
@@ -87,10 +90,12 @@ while True:
             # This leads to a RuntimeError() with the following string being returned over
             # and over.
             if str(e) == "Expected 01 but got 00":
-                print("WiFi disconnected, retrying.")
+                print(
+                    "WiFi disconnected or server unreachable, retrying in 10 seconds."
+                )
+                time.sleep(10)
                 break
+
             print(str(e))
             exception_count += 1
-            if exception_count > 3:
-                supervisor.reload()
             pass
