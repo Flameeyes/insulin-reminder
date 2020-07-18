@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: 2020 The insulin-reminder Authors
 #
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: 0BSD
 
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
