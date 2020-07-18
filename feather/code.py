@@ -6,18 +6,19 @@
 import secrets
 import time
 
-import adafruit_requests as requests
-import adafruit_rgbled
 import board
 import busio
-import neopixel
 import supervisor
+from digitalio import DigitalInOut
+
+import adafruit_requests as requests
+import adafruit_rgbled
+import neopixel
 from adafruit_esp32spi import (
     adafruit_esp32spi,
     adafruit_esp32spi_socket,
     adafruit_esp32spi_wifimanager,
 )
-from digitalio import DigitalInOut
 
 pixel = neopixel.NeoPixel(board.NEOPIXEL, 1, brightness=0.2)
 pixel[0] = (0, 0, 0)

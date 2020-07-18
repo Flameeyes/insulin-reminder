@@ -11,8 +11,9 @@ wiring and in term of configuration of the pins.
 
 import time
 
-import adafruit_rgbled
 import board
+
+import adafruit_rgbled
 import neopixel
 
 # Turn off the on-board neopixel, it's annoying while developing.

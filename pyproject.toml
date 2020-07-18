@@ -11,3 +11,7 @@ target-version = ['py37']
 line_length = 88
 multi_line_output = 3
 include_trailing_comma = true
+
+known_circuitpython = ["board", "busio", "digitalio", "supervisor"]
+known_third_party = ["adafruit_esp32spi", "adafruit_mcp230xx", "adafruit_requests", "adafruit_rgbled", "neopixel"]
+sections = "FUTURE,STDLIB,CIRCUITPYTHON,THIRDPARTY,FIRSTPARTY,LOCALFOLDER"
