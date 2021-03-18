@@ -1,0 +1,31 @@
+# -*- systemd
+
+# SPDX-FileCopyrightText: © 2020 The insulin-reminder Authors
+# SPDX-License-Identifier: MIT
+
+# This is a templated unit.
+# To make use of this, you need to symlink this as
+# ~/.config/systemd/user/insulin-reminder.service
+# and create a new file as
+# ~/.config/systemd/user/insulin-reminder.service.d/flask.conf
+# with the following settings:
+#
+# [Service]
+# WorkingDirectory = path/to/insulin-reminder/webapp
+# Environment = HOST=localhost
+# Environment = PORT=12345
+# # Optionally, for venv installation
+# Environment = PATH=path/to/insulin-reminder/webapp/venv/bin
+
+[Unit]
+Description = Insulin Reminder Webapp
+Documentation = https://github.com/Flameeyes/insulin-reminder
+After=network-online.target
+
+[Service]
+ExecStart = env flask run --host ${HOST} --port ${PORT} --reload
+Restart = always
+PrivateTmp = true
+
+[Install]
+WantedBy=default.target
